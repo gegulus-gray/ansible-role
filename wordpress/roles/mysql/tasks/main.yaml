@@ -1,0 +1,33 @@
+- name: update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+### Database
+- name: check mysql packages
+  ansible.builtin.apt:
+
+- name: install management packages on Ubuntu
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: latest
+
+- name: add MySQL GPG
+  ansible.builtin.apt_key:
+    url: "https://repo.mysql.com/RPM-GPG-KEY-mysql-2023"
+    state: present
+
+- name: add MySQL packages to APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://repo.mysql.com/apt/ubuntu focal main"
+    state: present
+    update_cache: true
+
+- name: install mysql
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+loop:
+  - mysql-server
+  - mysql-client
+  - python3-mysqldb
+  - libmysqlclient-dev    

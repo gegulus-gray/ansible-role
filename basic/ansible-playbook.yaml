@@ -1,0 +1,19 @@
+---
+- name: test-server
+  hosts: all
+  remote-user: vagrant
+
+  tasks:
+    - name: ping to server
+      ansible.builtin.ping:
+
+    - name: another ping
+      shell: ping -c 1 -w 2 8.8.8.8
+      ignore_errors: true
+
+    - name: test-vars
+      ansible.builtin.debug:
+        var: http_default_port[0]
+
+  vars_files:
+    - ./vars/file_var.yaml
