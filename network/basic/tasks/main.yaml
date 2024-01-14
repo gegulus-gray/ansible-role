@@ -1,0 +1,9 @@
+- name: install dependencies
+  import.tasks: install.yaml
+
+- name: show ipv4 address
+  ansible.builtin.debug:
+    var: ansible_all_ipv4_address
+
+- name: change ipv4 address
+  import.tasks: change-ipv4.yaml

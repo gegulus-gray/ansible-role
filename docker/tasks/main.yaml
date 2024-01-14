@@ -1,0 +1,36 @@
+---
+- name: requried packages
+  import.tasks: requirement.yaml
+
+- name: update repository
+  ansible.builtin.apt:
+    update_cache: true
+    state: present
+
+- name: Add Docker gpg key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+#"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable"
+- name: Add gpg key to Repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Install docker
+  ansible.builtin.apt:
+    name: docker-ce
+    state: latest
+
+- name: add user to docker group
+  ansible.builtin.user:
+    name: ansible
+    groups: docker
+    append: true
+
+- name: install docker-compose
+  ansible.builtin.get_url:
+    url: https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: "0755"

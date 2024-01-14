@@ -1,0 +1,11 @@
+- name: update
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: install python
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - python3
+    - python-netaddr

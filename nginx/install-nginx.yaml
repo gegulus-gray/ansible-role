@@ -2,4 +2,4 @@
   hosts: webserver
   become: true
   roles:
-    - install_nginx
+    - nginx

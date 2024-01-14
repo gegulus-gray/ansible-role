@@ -1,0 +1,12 @@
+---
+- name: install require packages
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - apt-transport-https
+      - ca-certificates
+      - wget
+      - gnupg-agent
+      - software-properties-common

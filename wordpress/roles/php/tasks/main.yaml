@@ -1,0 +1,17 @@
+- name: update packages
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: install management packages on Ubuntu
+  ansible.builtin.apt:
+    name: software-properties-common
+    state: latest
+
+- name: add gpg-key into packages repository
+  ansible.builtin.apt_key:
+    url: "https://www.php.net/distributions/php-keyring.gpg"
+    state: present
+
+- name: add PHP packages into APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb "

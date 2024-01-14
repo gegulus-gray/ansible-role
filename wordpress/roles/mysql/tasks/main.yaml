@@ -2,7 +2,6 @@
   ansible.builtin.apt:
     update_cache: true
 
-### Database
 - name: check mysql packages
   ansible.builtin.apt:
 
@@ -30,4 +29,12 @@ loop:
   - mysql-server
   - mysql-client
   - python3-mysqldb
-  - libmysqlclient-dev    
+  - libmysqlclient-dev
+
+- name: Start and enable Mysql service
+  ansible.builtin.service:
+    name: mysql
+    enabled: true
+    state: started
+
+

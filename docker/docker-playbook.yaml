@@ -1,0 +1,6 @@
+---
+- name: deploy docker
+  hosts: webserver
+  become: true
+  roles:
+    - docker
