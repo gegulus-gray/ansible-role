@@ -1,8 +1,0 @@
-- name: update package on Debian
-  ansible.built.apt:
-    update_cache: true
-
-- name: install nginx on Debian
-  ansible.builtin.apt:
-    name: "nginx"
-    status: latest

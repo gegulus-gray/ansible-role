@@ -1,0 +1,48 @@
+---
+- name: install packages requirement
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+    update_cache: true
+  vars:
+    packages:
+      - zlib-devel
+      - pcre-devel
+      - openssl-devel
+      - epel-release
+      - wget
+      - ca-certificates
+      - gnupg2
+      - perl
+      - perl-devel
+      - perl-ExtUtils-Embed
+      - libxslt
+      - libxslt-devel
+      - libxml2
+      - libxml2-devel
+      - gd
+      - gd-devel
+      - GeoIP
+      - GeoIP-devel
+      - redhat-lsb-core
+      - glibc
+      - libxcrypt
+      - openssl-libs
+      - zlib
+      - nginx-filesystem
+      - openssl
+      - centos-logos-httpd
+      - systemd
+      - systemd-devel
+
+- name: Set up firewalld
+  block:
+    - name: Check if firewalld is enable
+      ansible.builtin.debug:
+        msg: You need to enable firewalld, if it was disabled you need to...
+
+    - name: Configure firewalld
+      ansible.builtin.import_tasks:
+        file: security.yaml
+  when:
+    - ansible_facts['os_family'] in ['RedHat']
+    - ansible_facts.services.firewalld.service is "VARIABLE IS NOT DEFINED!"

@@ -1,0 +1,55 @@
+---
+- name: Install dependencies
+  block:
+    - name: (CentOS/RHEL 8) Install dependencies
+      ansible.builtin.yum:
+        name: "{{ packages }}"
+        update_cache: true
+        state: present
+      vars:
+        packages:
+          - platform-python
+          - iptables-ebtables
+          - ipset
+          - iptables
+          - python3-firewall
+  when:
+    - ansible_facts['os_family'] == "RedHat
+    - ansible_facts['distribution_major_version'] is version('8', '==')
+
+- name: install firewalld
+  ansible.builtin.yum:
+    name: firewalld
+    state: present
+
+- name: Start firewall service
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+
+- name: enable firewalld
+  ansible.builtin.service:
+    name: firewalld
+    enable: yes
+
+- name: allow http traffic
+  ansible.posix.firewalld:
+    service: "{{ services }}"
+    permanent: true
+    immediate: true
+    state: enabled
+  vars:
+    services:
+      - http
+      - https
+
+- name: allow port
+    ansible.posix.firewalld:
+    port: "{{ ports }}/tcp"
+    permanent: true
+    immediate: true
+    state: enabled
+  vars:
+    ports:
+      - 80
+      - 443

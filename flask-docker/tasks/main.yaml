@@ -1,0 +1,37 @@
+---
+- name: service docker is enable
+  ansible.builtin.service:
+    name: docker
+    state: started
+
+- name: Pull an image
+  community.docker.docker_image:
+    name: gegulusgray/flask-webapp
+    source: pull
+    tag: v1.0
+
+- name: run some containers
+  community.docker.docker_container:
+    name: "{{ item.name }}"
+    image: "{{ item.image }}"
+    state: started
+    volumes:
+      - /data
+    ports:
+      - "{{ item.ports }}"
+  loop:
+    - {
+        name: "app-1",
+        image: "gegulusgray/flask-webapp:latest",
+        ports: "8001:80",
+      }
+    - {
+        name: "app-2",
+        image: "gegulusgray/flask-webapp:v1.0",
+        ports: "8002:80",
+      }
+    - {
+        name: "app-3",
+        image: "gegulusgray/flask-webapp:v1.0",
+        ports: "8003:80",
+      }

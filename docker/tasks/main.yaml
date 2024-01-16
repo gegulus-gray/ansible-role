@@ -41,3 +41,9 @@
     url: https://github.com/docker/compose/releases/download/v2.24.0/docker-compose-linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: "0755"
+
+- name: change docker-compose permission
+  ansible.builtin.command: chmod +x /usr/local/bin/docker-compose
+
+- name: write log-note
+  ansible.builtin.command: export ANSIBLE_LOG_PATH=$HOME/ansible/log/ansible-$(date +"%Y-%m-%d %H:%M:%S")

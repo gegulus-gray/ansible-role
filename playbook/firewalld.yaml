@@ -1,0 +1,22 @@
+- name: firewalld
+  hosts:
+  become: true
+
+  tasks:
+    - name: install requirement packages
+      ansible.builtin.yum:
+        name: "{{ packages }}"
+        update_cache: true
+        state: present
+      vars:
+        packages:
+          - platform-python
+          - iptables-ebtables
+          - ipset
+          - iptables
+          - python3-firewall
+
+    - name: install firewalld
+      ansible.builtin.yum:
+        name: firewalld
+        state: present

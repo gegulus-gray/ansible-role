@@ -1,0 +1,6 @@
+---
+- name: deploy flask-webapp
+  hosts: webserver
+  become: true
+  roles:
+    - flask-docker

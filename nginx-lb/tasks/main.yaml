@@ -1,0 +1,30 @@
+---
+- name: install packages requirement
+  ansible.builtin.import_tasks:
+    file: requirements.yaml
+
+- name: update repository
+  ansible.builtin.dnf:
+    update_cache: true
+    state: present
+
+- name: add nginx signing key
+  ansible.builtin.import_tasks:
+    file: keys.yaml
+
+# https://packages.nginx.org/unit/rhel/$releasever/$basearch/
+- name: add nginx repository
+  ansible.builtin.yum_repository:
+    name: nginx
+    baseurl: "{{ nginx_default_url }}/{{ (ansible_facts[distribution] == 'RedHat') | ternary('rhel/', 'centos') }}/{{ ansible_facts['distribution_major_verion'] }}/x86_64"
+    description: Nginx repository
+    enable: yes
+    gpgcheck: yes
+    mode: 0644
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+  when: ansible_facts['os_family'] == 'RedHat'

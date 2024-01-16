@@ -1,0 +1,22 @@
+---
+- name: Check Firewalld Service Status
+  hosts: loadbalancer
+  become: true
+  gather_facts: no
+  tasks:
+    - name: Check if firewalld is enable
+      ansible.builtin.debug:
+        msg: You need to enable firewalld, if it was disabled you need to reboot
+      when: ansible_facts.services.firewalld.service is "VARIABLE IS NOT DEFINED!"
+
+    - name: uninstall firewalld
+      ansible.builtin.yum:
+        name: firewalld
+        state: absent
+
+    - name: Check Firewalld status
+      ansible.builtin.service_facts:
+
+    - name: Print service facts
+      ansible.builtin.debug:
+        var: ansible_facts.services.firewalld.service
