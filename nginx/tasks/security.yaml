@@ -14,7 +14,7 @@
           - iptables
           - python3-firewall
   when:
-    - ansible_facts['os_family'] == "RedHat
+    - ansible_facts['os_family'] == "RedHat"
     - ansible_facts['distribution_major_version'] is version('8', '==')
 
 - name: install firewalld
@@ -30,26 +30,32 @@
 - name: enable firewalld
   ansible.builtin.service:
     name: firewalld
-    enable: yes
+    enabled: true
 
 - name: allow http traffic
   ansible.posix.firewalld:
-    service: "{{ services }}"
+    service: http
     permanent: true
     immediate: true
     state: enabled
-  vars:
-    services:
-      - http
-      - https
+
+- name: allow https traffic
+  ansible.posix.firewalld:
+    service: https
+    permanent: true
+    immediate: true
+    state: enabled
 
 - name: allow port
-    ansible.posix.firewalld:
-    port: "{{ ports }}/tcp"
+  ansible.posix.firewalld:
+    port: 80/tcp
     permanent: true
     immediate: true
     state: enabled
-  vars:
-    ports:
-      - 80
-      - 443
+
+- name: allow port
+  ansible.posix.firewalld:
+    port: 443/tcp
+    permanent: true
+    immediate: true
+    state: enabled

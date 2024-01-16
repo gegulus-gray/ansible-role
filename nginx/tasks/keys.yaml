@@ -7,4 +7,4 @@
   ansible.builtin.rpm_key:
     fingerprint: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
     key: "{{ keysite }}"
-  when: ansible_facts['os_family'] is 'RedHat'
+  when: ansible_facts['os_family'] == "RedHat"

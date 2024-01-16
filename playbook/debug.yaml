@@ -19,4 +19,9 @@
 
     - name: Print service facts
       ansible.builtin.debug:
-        var: ansible_facts.services.firewalld.service
+        var: ansible_facts
+      register: result
+
+    - name: print
+      ansible.builtin.debug:
+        var: result

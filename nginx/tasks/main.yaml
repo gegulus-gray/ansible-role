@@ -16,9 +16,9 @@
 - name: add nginx repository
   ansible.builtin.yum_repository:
     name: nginx
-    baseurl: "{{ nginx_default_url }}/{{ (ansible_facts[distribution] == 'RedHat') | ternary('rhel/', 'centos') }}/{{ ansible_facts['distribution_major_verion'] }}/x86_64"
+    baseurl: "{{ nginx_default_url }}/{{ (ansible_facts['distribution'] == 'RedHat') | ternary('rhel/', 'centos') }}/{{ ansible_facts['distribution_major_verion'] }}/x86_64"
     description: Nginx repository
-    enable: yes
+    enabled: yes
     gpgcheck: yes
     mode: 0644
   when: ansible_facts['os_family'] == 'RedHat'
@@ -28,3 +28,8 @@
     name: nginx
     state: present
   when: ansible_facts['os_family'] == 'RedHat'
+
+- name: reload firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: reloaded

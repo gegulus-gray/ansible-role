@@ -1,5 +1,0 @@
-- name: install nginx on linux server
-  hosts: webserver
-  become: true
-  roles:
-    - nginx

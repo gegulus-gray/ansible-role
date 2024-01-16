@@ -21,8 +21,7 @@
       - libxml2-devel
       - gd
       - gd-devel
-      - GeoIP
-      - GeoIP-devel
+      - geoipupdate
       - redhat-lsb-core
       - glibc
       - libxcrypt
@@ -45,4 +44,4 @@
         file: security.yaml
   when:
     - ansible_facts['os_family'] in ['RedHat']
-    - ansible_facts.services.firewalld.service is "VARIABLE IS NOT DEFINED!"
+    - ansible_facts.services.firewalld.service == "VARIABLE IS NOT DEFINED!"

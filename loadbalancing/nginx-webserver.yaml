@@ -1,0 +1,6 @@
+---
+- name: config loadbalancer
+  hosts: loadbalancer
+  become: true
+  roles:
+    - loadbalancer
