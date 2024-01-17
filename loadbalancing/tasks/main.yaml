@@ -1,8 +1,8 @@
 ---
-- name: install nginx on redhat
-  import.tasks: redhat.yaml
-  when: ansible_facts['os_family'] | lower == "redhat"
-
-- name: install nginx on Debian
-  import.tasks: debian.yaml
-  when: ansible_facts['os_family'] | lower == "debian"
+- name: config load balancer
+  ansible.builtin.template:
+    src: loadbalancer.conf.j2
+    dest: "{{ nginx_default_conf_path }}"
+    owner: ansible
+    group: ansible
+    mode: "0644"

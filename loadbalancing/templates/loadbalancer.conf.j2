@@ -1,0 +1,13 @@
+upstream backend{
+  {{ loadbalancer_method }};
+  {% for server in backend-servers %}
+  server {{ server.address }}:{{ server.port }};
+  {% endfor %}
+}
+
+server {
+  listen {{ loadbalancer_port }};
+  localtion / {
+    proxy_pass http://backend;
+  }
+}

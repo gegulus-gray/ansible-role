@@ -1,0 +1,22 @@
+---
+nginx_default_conf_path: /etc/nginx/conf.d/loadbalancer.conf
+
+loadbalancer_method:
+  - round-robin
+  - ip_hash
+  - least_conn
+
+backend-servers:
+  - name: server1
+    address: 192.168.126.20
+    port: 8001
+
+  - name: server1
+    address: 192.168.126.20
+    port: 8002
+
+  - name: server1
+    address: 192.168.126.20
+    port: 8003
+
+loadbalancer_port: 80
